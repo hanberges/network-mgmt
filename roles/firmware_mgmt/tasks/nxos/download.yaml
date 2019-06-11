@@ -1,0 +1,26 @@
+---
+- name: "nxos.download: create directory to store downloaded images"
+  run_once: true
+  changed_when: false
+  tempfile:
+    state: directory
+    suffix: nxos_images
+  register: r_tempfile
+
+- name: "nxos.download: system image"
+  run_once: true
+  get_url:
+    validate_certs: no
+    url: "{{ firmware_mgmt_url }}/system.bin"
+    dest: "{{ r_tempfile.path }}/system.bin"
+    checksum: "md5:{{ firmware_mgmt_url }}/system.md5sum"
+  register: r_get_url_system
+
+- name: "nxos.download: kickstart image"
+  run_once: true
+  get_url:
+    validate_certs: no
+    url: "{{ firmware_mgmt_url }}/kickstart.bin"
+    dest: "{{ r_tempfile.path }}/kickstart.bin"
+    checksum: "md5:{{ firmware_mgmt_url }}/kickstart.md5sum"
+  register: r_get_url_kickstart

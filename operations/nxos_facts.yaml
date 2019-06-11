@@ -1,0 +1,7 @@
+---
+- name: "nxos_facts"
+  hosts: nxos
+  gather_facts: no
+  tasks:
+    - name: "gather nxos facts"
+      nxos_facts:

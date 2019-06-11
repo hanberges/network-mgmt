@@ -1,0 +1,25 @@
+---
+- name: "nxos.install: firmware install"
+  vars:
+    ansible_connection_timeout: 3600
+    ansible_command_timeout: 3600
+  nxos_install_os:
+    system_image_file: "{{ r_get_url_system.dest | basename  }}"
+    kickstart_image_file: "{{ r_get_url_kickstart.dest | basename  }}"
+    issu: desired
+
+- name: "nxos.install: wait for device connection..."
+  wait_for:
+    port: 22
+    state: started
+    timeout: 1200
+    delay: 60
+    host: "{{ ansible_host }}"
+
+- name: "nxos.install: gather facts"
+  nxos_facts:
+
+- name: "nxos.install: assert desired version"
+  assert:
+    that:
+      - ansible_net_version == firmware_mgmt_version

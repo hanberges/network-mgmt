@@ -1,0 +1,11 @@
+---
+firmware_mgmt_pre_tasks: []
+firmware_mgmt_pre_roles: []
+firmware_mgmt_version: "7.1(4)N1(1)"
+firmware_mgmt_os: "{{ ansible_network_os | default('nxos') }}"
+firmware_mgmt_platform: "{{ ansible_network_platform | default('5000') }}"
+firmware_mgmt_image_server: "scripts.hpbrs.sf.intra.laposte.fr"
+firmware_mgmt_url: "https://{{ firmware_mgmt_image_server }}/firmwares/{{ firmware_mgmt_os }}/{{ firmware_mgmt_platform }}/{{ firmware_mgmt_version }}/"
+firmware_mgmt_post_tasks: []
+firmware_mgmt_post_roles: []
+

@@ -1,0 +1,31 @@
+---
+- name: "install"
+  when: ansible_net_version != firmware_mgmt_version
+  block:
+
+    - name: "load nos/platform specific variables"
+      include_vars: "{{ item }}"
+      with_first_found:
+        - skip: true
+          files:
+            - "{{ firmware_mgmt_os }}/{{ firmware_mgmt_platform }}/{{ firmware_mgmt_version }}.yaml"
+            - "{{ firmware_mgmt_os }}/{{ firmware_mgmt_platform }}.yaml"
+            - "{{ firmware_mgmt_os }}/main.yaml"
+            - "main.yaml"
+          paths: 
+            - "../vars/"
+
+    - name: "call pre tasks"
+      include_tasks: "pre.yaml"
+
+    - name: "call nos/platform specific tasks"
+      include_tasks: "{{ item }}"
+      with_first_found:
+        - skip: true
+          files:
+            - "{{ firmware_mgmt_os }}/{{ firmware_mgmt_platform }}/{{ firmware_mgmt_version }}/main.yaml"
+            - "{{ firmware_mgmt_os }}/{{ firmware_mgmt_platform }}/main.yaml"
+            - "{{ firmware_mgmt_os }}/main.yaml"
+  always:
+    - name: "call post tasks"
+      include_tasks: "post.yaml"

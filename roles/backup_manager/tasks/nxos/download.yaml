@@ -1,0 +1,43 @@
+---
+- name: "nxos.pre: create temporary directory to store configuration"
+  run_once: true
+  changed_when: false
+  tempfile:
+    state: directory
+    suffix: nxos
+  register: r_tempfile
+
+- name: "nxos.pre: git clone"
+  run_once: true
+  changed_when: false
+  git:
+    accept_hostkey: true
+    repo: "{{ backup_manager_repo_url }}"
+    dest: "{{ r_tempfile.path }}"
+    clone: yes
+
+- name: "nxos.pre: git branch list"
+  run_once: true
+  changed_when: false
+  register: git_branch_list
+  shell: "git branch -a --list origin/{{ backup_manager_repo_branch | quote}}"
+  args:
+    chdir: "{{ r_tempfile.path }}"
+
+- name: "nxos.pre: git checkout new branch"
+  when: git_branch_list.stdout_lines|length < 1
+  run_once: true
+  register: git_checkout
+  shell: "git checkout -B {{ backup_manager_repo_branch | quote }} origin/HEAD"
+  args:
+    chdir: "{{ r_tempfile.path }}"
+  notify: git_sync
+
+- name: "nxos.pre: git checkout existing branch"
+  when: git_branch_list.stdout_lines|length > 0
+  changed_when: false
+  run_once: true
+  register: git_checkout
+  shell: "git checkout -B {{ backup_manager_repo_branch | quote }} origin/{{ backup_manager_repo_branch | quote }}"
+  args:
+    chdir: "{{ r_tempfile.path }}"

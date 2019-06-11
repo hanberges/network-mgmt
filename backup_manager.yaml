@@ -1,0 +1,8 @@
+---
+- name: "Backup Management"
+  hosts: "{{ target_devices }}:&{{ target_role }}"
+  gather_facts: no
+  pre_tasks:
+    - nxos_facts:
+  roles:
+    - role: "backup_manager"

@@ -1,0 +1,9 @@
+---
+- name: "nxos.pre: collect states"
+  nxos_command:
+    commands:
+      - "show version"
+      - "show module"
+      - "show interface status"
+      - "show fex"
+  register: r_nxos_command_pre

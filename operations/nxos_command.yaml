@@ -1,0 +1,9 @@
+---
+- name: "nxos_command"
+  hosts: nxos
+  gather_facts: no
+  tasks:
+    - name: "nxos command"
+      nxos_command:
+        commands: "{{ nxos_command_commands }}"
+

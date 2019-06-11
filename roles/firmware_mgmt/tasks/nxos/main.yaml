@@ -1,0 +1,15 @@
+---
+- name: "pre tasks"
+  include_tasks: "pre.yaml"
+
+- name: "download tasks"
+  include_tasks: "download.yaml"
+
+- name: "upload tasks"
+  include_tasks: "upload.yaml"
+
+- name: "install tasks"
+  include_tasks: "install.yaml"
+
+- name: "post tasks"
+  include_tasks: "post.yaml"

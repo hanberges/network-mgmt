@@ -1,0 +1,10 @@
+---
+backup_manager_pre_tasks: []
+backup_manager_pre_roles: []
+backup_manager_version: "{{ ansible_net_version | default(None, True) }}"
+backup_manager_os: "{{ ansible_network_os | default('nxos') }}"
+backup_manager_platform: "{{ ansible_network_platform | default('5000') }}"
+backup_manager_repo_url: "ssh://git@sdy02w004.hpbrs.sf.intra.laposte.fr/root/backups"
+backup_manager_repo_branch: "master"
+backup_manager_post_tasks: []
+backup_manager_post_roles: []

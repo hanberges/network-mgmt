@@ -1,0 +1,6 @@
+---
+- name: "download tasks"
+  include_tasks: "download.yaml"
+
+- name: "backup tasks"
+  include_tasks: "backup.yaml"

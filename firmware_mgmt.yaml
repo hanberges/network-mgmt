@@ -1,0 +1,8 @@
+---
+- name: "Firmware Management"
+  hosts: "{{ target_devices }}:&{{ target_role }}"
+  gather_facts: no
+  pre_tasks:
+    - nxos_facts:
+  roles:
+    - role: "firmware_mgmt"

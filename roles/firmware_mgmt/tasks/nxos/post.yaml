@@ -1,0 +1,9 @@
+---
+- name: "nxos.post: collect states"
+  nxos_command:
+    commands:
+      - "show version"
+      - "show module"
+      - "show interface status"
+      - "show fex"
+  
